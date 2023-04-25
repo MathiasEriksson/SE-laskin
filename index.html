@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+window.addEventListener("DOMContentLoaded", (event) => {
+    let coordForm = document.getElementById("coordForm");
+
+    coordForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    let N1 = document.getElementById("N1");
+    let E1 = document.getElementById("E1");
+    let N2 = document.getElementById("N2");
+    let E2 = document.getElementById("E2");
+
+    try {
+        let dE = E2 - E1;
+        let dN = N2 - N1;
+        let dist = Math.sqrt(dE**2 + dN**2);
+        let av = Math.atan(Math.abs(dN/dE))/0.06;
+        let dir = NaN;
+        consloe.log(dE)
+        console.log(dN)
+        console.log(av)
+        if(dN >= 0 & dE >= 0){
+            dir = 1500 - av
+        }
+        if(dN < 0 & dE >= 0){
+            dir = 1500 + av
+        }
+        if(dN < 0 & dE < 0){
+            dir = 4500 - av
+        }else {
+            dir = 4500 + av
+        }
+        document.getElementById("direction").innerHTML = dir
+        document.getElementById("distance").innerHTML = dist
+
+    } catch (error) {
+        console.log("Failed to calculate");
+    }
+    });
+
+});
+
+</script>
+</head>
+<body>
+
+<h2>Suunta-Etäisyys laskin</h2>
+
+<p">Syötä kaksi MGRS koordinaattia samassa formaatissa ja laskin laskee suunnan (piiruissa) ja etäisyyden kohteesta 1 kohteeseen 2.</p>
+
+<div class="container">
+    <form action="" id="coordForm">
+      <h3>Koordinaatit</h3>
+      <input type="number" id="N1" class="form-control" placeholder="N kohde 1">
+      <input type="number" id="E1" class="form-control" placeholder="E kohde 1"><br>
+      <input type="number" id="N2" class="form-control" placeholder="N kohde 2">
+      <input type="number" id="E2" class="form-control" placeholder="E kohde 2"><br>
+      <button type="submit">Laske</button>
+    </form>
+  </div>
+  <p>Suunta: </p> <p id="direction"></p>
+  <p>Etäisyys: </p id="distance">
+
+</body>
+</html> 
